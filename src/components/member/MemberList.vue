@@ -1,24 +1,25 @@
 <template>
-  <ul>
-    <li
-      v-for="member in memberList"
-      :key="member.id"
-    >
-      [{{member.id}}] {{member.name}} 
-      <button @click="$emit('editMember', member.id)">edit</button>
-      <button @click="$emit('deleteMember', member.id)">delete</button>
-    </li>
-  </ul>
+<v-list>
+  <MemberItem 
+    v-for="member in memberList"
+    :key="member.id"
+    :member="member"
+  />
+</v-list>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import MemberItem from './MemberItem';
 
 export default {
   computed: {
     ...mapGetters([
       'memberList'
     ])
+  },
+  components: {
+    MemberItem
   }
 }
 </script>

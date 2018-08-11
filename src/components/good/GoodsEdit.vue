@@ -1,28 +1,36 @@
 <template>
-  <div>
-    <h1>Goods Edit </h1>
-    <div>
-      <label> 상품명: 
-        <input type="text" v-model="name" />
-        
-      </label>
-    </div>
-    <div>
-      <label> 단가: 
-        <input type="number" v-model="unitPrice" />
-      </label>
-      full: {{fullPrice}}
-    </div>
-    <GoodsCharge 
-      :memberList="memberList"
-      :charges="charges"
-      @changeCharges="changeCharges($event)"
-    />
-    <div>
-      <button @click="$emit('cancel')">cancel</button>
-      <button @click="complete">Complete</button>
-    </div>
-  </div>
+  <v-card>
+    <v-card-title>
+      <span class="headline">상품 추가</span>
+    </v-card-title>
+    <v-card-text>
+      <v-container grid-list-md>
+         <v-layout wrap>
+          <v-flex xs12>
+            <v-text-field label="상품명" required v-model="name" autofocus></v-text-field>
+          </v-flex>
+          <v-flex xs8>
+            <v-text-field label="단가" required v-model="unitPrice"></v-text-field>
+          </v-flex>
+          <v-flex xs4>
+            full: {{fullPrice}}
+          </v-flex>
+          <v-flex xs12>
+            <GoodsCharge 
+              :memberList="memberList"
+              :charges="charges"
+              @changeCharges="changeCharges($event)"
+            />
+          </v-flex>
+         </v-layout>
+      </v-container>
+    </v-card-text>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn color="blue darken-1" flat @click="$emit('cancel')">닫기</v-btn>
+      <v-btn color="blue darken-1" flat @click="complete">저장</v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -45,7 +53,7 @@ export default {
   },
   computed: {
     fullPrice() {
-      return this.unitPrice * this.count;
+      return this.unitPrice * this.count || undefined;
     }
   },
   methods : {

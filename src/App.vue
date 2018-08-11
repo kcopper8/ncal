@@ -1,28 +1,30 @@
 <template>
-  <div id="app">
-    <NcHeader />
-    <router-view></router-view>
-  </div>
+  <v-app>
+    <v-toolbar
+      app
+    >
+      <v-toolbar-side-icon></v-toolbar-side-icon>
+      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-toolbar>
+    <v-content>
+      <MainPage/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import NcHeader from './components/layout/NcHeader';
+import MainPage from './components/MainPage';
 
 export default {
-  name: 'app',
+  name: 'App',
+  data () {
+    return {
+      title: 'NCal'
+    }
+  },
   components: {
-    NcHeader
+    MainPage
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  max-width: 640px;
-  margin: 60px auto 0;
-}
-</style>

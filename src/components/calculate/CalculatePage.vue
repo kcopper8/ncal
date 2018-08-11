@@ -1,18 +1,15 @@
 <template>
   <div>
-    <h1>Calculate Page</h1>
-      <ul>
-        <li
-          v-for="member in memberList"
-          :key="member.id"
-        >
-          <CalculateItem 
-            :member="member"
-            :calculateItem="calculate[member.id]"
-          />
-        </li>
-      </ul>
-    
+    <v-list expand>
+      <CalculateItem
+        v-for="member in memberList"
+        :key="member.id"
+        v-if="!!calculate[member.id]"
+        :member="member"
+        :calculateItem="calculate[member.id]"
+        
+      />
+    </v-list>
   </div>
 </template>
 

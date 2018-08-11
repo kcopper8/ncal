@@ -1,24 +1,37 @@
 <template>
-  <div>
-    <h1>Goods Page</h1>
-    <GoodsList />
-    <div>
-      <button @click="isEditing = true;">Add</button>
-      <GoodsEdit v-if="isEditing"
-        :editingGoods="editingGoods"
-        :memberList="memberList"
-        @complete="completeEditing($event)"
-        @cancel="isEditing = false"
-      />
-
-    </div>
-  </div>
+  <v-container pa-0 grid-list-xl>
+    <v-layout row wrap>
+      <v-flex
+        xs12
+        v-for="goods in goodsList"
+        :key="goods.id"
+      >
+        <GoodsItem
+          :goods="goods"
+        />
+      </v-flex>
+    </v-layout>
+    <v-layout row>
+      <v-dialog v-model="isEditing" persistent max-width="500px">
+        <v-btn slot="activator" color="primary" dark>Add</v-btn>
+          <GoodsEdit v-if="isEditing"
+            :editingGoods="editingGoods"
+            :memberList="memberList"
+            @complete="completeEditing($event)"
+            @cancel="isEditing = false"
+          />
+      </v-dialog>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-import GoodsList from './GoodsList.vue';
-import GoodsEdit from './GoodsEdit.vue';
 import { mapGetters } from 'vuex';
+
+import GoodsList from './GoodsList';
+import GoodsEdit from './GoodsEdit';
+import GoodsItem from './GoodsItem';
+
 
 export default {
   data() {
@@ -28,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['memberList'])
+    ...mapGetters(['memberList', 'goodsList'])
   },
   methods: {
     completeEditing(goods) {
@@ -48,7 +61,8 @@ export default {
   },
   components: {
     GoodsList,
-    GoodsEdit
+    GoodsEdit,
+    GoodsItem
   }
 }
 </script>

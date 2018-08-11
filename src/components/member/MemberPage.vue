@@ -1,21 +1,20 @@
 <template>
-
-  <div>
-    <h1>member page</h1>
+  <v-card>
     <MemberList
       @editMember="startEditingMember($event)"
-      @deleteMember="deleteMember($event)"
     ></MemberList>
-    <div>
-      <button @click="isEditing = true">add</button>
-      <MemberEdit 
-        v-if="isEditing"
-        :memberEditing="memberEditing"
-        @cancel="isEditing = false"
-        @complete="completeEditing($event)"
-        ></MemberEdit>
-    </div>
-  </div>
+    <v-layout row>
+      <v-dialog v-model="isEditing" persistent max-width="500px">
+        <v-btn slot="activator" color="primary" dark>Add</v-btn>
+        <MemberEdit 
+          v-if="isEditing"
+          :memberEditing="memberEditing"
+          @cancel="endEditing"
+          @complete="completeEditing($event)"
+          ></MemberEdit>
+      </v-dialog>
+    </v-layout>
+  </v-card>
 </template>
 
 <script>
@@ -41,15 +40,15 @@ export default {
         this.$store.commit('addMember', member)
       }
 
-      this.memberEditing = null;
-      this.isEditing = false;
+      this.endEditing();
     },
     startEditingMember(id) {
       this.memberEditing = this.$store.state.members[id];
       this.isEditing = true;
     },
-    deleteMember(id) {
-      this.$store.commit('deleteMember', id)
+    endEditing() {
+      this.memberEditing = null;
+      this.isEditing = false;
     }
   }
 }
