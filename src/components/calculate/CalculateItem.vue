@@ -1,5 +1,5 @@
 <template>
-  <v-list-group :value="true">
+  <v-list-group :value="fold" @input="$emit('update:fold', $event)">
     <v-list-tile slot="activator">
       <v-list-tile-content>
         <v-list-tile-title>{{member.name}} : {{fullCharge}}</v-list-tile-title>
@@ -31,7 +31,7 @@ function formatCurrency(number) {
   }).format(Math.round(number))
 }
 export default {
-  props: ['member', 'calculateItem'],
+  props: ['member', 'calculateItem', 'fold'],
   computed: {
     fullCharge() {
       return formatCurrency(this.calculateItem.reduce((chargeSum, goods) => {
