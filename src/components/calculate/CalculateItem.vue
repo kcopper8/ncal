@@ -24,12 +24,8 @@
 </template>
 
 <script>
-function formatCurrency(number) {
-  return new Intl.NumberFormat(undefined, {
-    style: 'currency',
-    currency: 'KRW'
-  }).format(Math.round(number))
-}
+import formatCurrency from '@/utils/formatCurrency';
+
 export default {
   props: ['member', 'calculateItem', 'fold'],
   computed: {
