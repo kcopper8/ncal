@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
+import {doDecompress} from "../service/compress";
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ function getNextIdOfGoods(goodsList) {
   return getNewIdOfIds(ids);
 }
 
-export default new Vuex.Store({
+
+const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     members: {},
@@ -56,6 +58,9 @@ export default new Vuex.Store({
       })
 
       return chargeMembers;
+    },
+    fullData: state => {
+      return JSON.parse(JSON.stringify(state));
     }
   },
   mutations: {
@@ -106,6 +111,19 @@ export default new Vuex.Store({
     deleteGoods(state, id) {
       const idx = state.goods.findIndex(item => item.id === id);
       state.goods.splice(idx, 1);
+    },
+    loadFullData(state, payload) {
+      state.members = payload.members;
+      state.goods = payload.goods;
     }
   }
-})
+});
+
+if (global.location.search.length > 1) {
+  doDecompress(global.location.search.substr(1)).then(data => {
+    global.history.replaceState({}, '', global.location.pathname);
+    store.commit('loadFullData', data);
+  });
+}
+
+export default store;

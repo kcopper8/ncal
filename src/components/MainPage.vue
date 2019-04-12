@@ -27,7 +27,7 @@ import CalculatePage from './calculate/CalculatePage'
 export default {
   data() {
     return {
-      step: '1'
+      step: '3'
     }
   },
   components: {
