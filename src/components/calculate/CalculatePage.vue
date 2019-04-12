@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import { mapGetters } from 'vuex';
 import CalculateWidget from './CalculateWidget';
 import CalculateText from './CalculateText';

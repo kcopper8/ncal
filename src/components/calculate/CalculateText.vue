@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import CalculateTextMember from './CalculateTextMember'
 import CalculateTextItem from './CalculateTextItem'
 
