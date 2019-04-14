@@ -9,7 +9,7 @@
       <v-btn v-if="!readonly" @click="share">공유하기</v-btn>
     </v-toolbar>
     <v-content>
-      <MainPage/>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
@@ -33,9 +33,6 @@ export default {
         global.history.pushState({}, undefined, `?${compressedText}`);
       });
     }
-  },
-  components: {
-    MainPage
   }
 }
 </script>
