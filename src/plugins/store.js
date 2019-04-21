@@ -23,9 +23,44 @@ function getNextIdOfGoods(goodsList) {
   return getNewIdOfIds(ids);
 }
 
+const dutchModule = {
+  state: { 
+    list: [
+      {
+        id: '1',
+        title: '누구랑 뭐뭐',
+        date: '2019-12-13',
+        data: {"members":{"1":{"id":"1","name":"member1"}},"goods":[{"name":"fewg","unitPrice":"1234","count":2,"charges":["1","2"],"id":"1"}]}
+      },
+      {
+        id: '2',
+        title: '누구랑 뭐뭐',
+        date: '2019-12-13',
+        data: {"members":{"1":{"id":"1","name":"member1"}},"goods":[{"name":"fewg","unitPrice":"1234","count":2,"charges":["1","2"],"id":"1"}]}
+      },
+      {
+        id: '3',
+        title: '누구랑 뭐뭐',
+        date: '2019-12-13',
+        data: {"members":{"1":{"id":"1","name":"member1"}},"goods":[{"name":"fewg","unitPrice":"1234","count":2,"charges":["1","2"],"id":"1"}]}
+      },
+      {
+        id: '4',
+        title: '누구랑 뭐뭐',
+        date: '2019-12-13',
+        data: {"members":{"1":{"id":"1","name":"member1"}},"goods":[{"name":"fewg","unitPrice":"1234","count":2,"charges":["1","2"],"id":"1"}]}
+      },
+
+    ] 
+  },
+  mutations: {
+  }
+}
 
 const store = new Vuex.Store({
-  plugins: [createPersistedState()],
+  modules: {
+    dutch: dutchModule
+  },
   state: {
     readonly: true,
     members: {},
@@ -123,6 +158,10 @@ const store = new Vuex.Store({
       state.members = payload.members;
       state.goods = payload.goods;
       state.readonly = payload.readonly;
+    },
+    loadDutchData(state, payload) {
+      state.members = payload.members;
+      state.goods = payload.goods;
     }
   }
 });
