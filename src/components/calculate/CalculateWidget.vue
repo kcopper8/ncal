@@ -9,6 +9,11 @@
       Fold All
     </v-btn>
     <v-list expand>
+      <v-subheader
+        :key="'guide'"
+      >
+        이름을 클릭/터치하면 상세 내역이 펼쳐집니다.
+      </v-subheader>
       <CalculateItem
         v-for="item in memberItems"
         :key="item.member.id"
@@ -18,7 +23,6 @@
       />
     </v-list>
   </div>
-
 </template>
 
 <script>

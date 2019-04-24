@@ -1,16 +1,16 @@
 <template>
   <v-stepper v-model="step" vertical non-linear>
-    <v-stepper-step step="1" editable>Member</v-stepper-step>
+    <v-stepper-step step="1" editable>인원</v-stepper-step>
     <v-stepper-content step="1">
       <MemberPage v-if="step === '1'" />
     </v-stepper-content>
 
-    <v-stepper-step step="2" editable>Goods</v-stepper-step>
+    <v-stepper-step step="2" editable>비용</v-stepper-step>
     <v-stepper-content step="2">
       <GoodsPage v-if="step === '2'"/>
     </v-stepper-content>
 
-    <v-stepper-step step="3" editable>Calculation</v-stepper-step>
+    <v-stepper-step step="3" editable>정산결과</v-stepper-step>
     <v-stepper-content step="3">
       <v-card class="mb-5">
         <CalculatePage v-if="step === '3'"/>
