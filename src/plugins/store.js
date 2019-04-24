@@ -129,7 +129,6 @@ const store = new Vuex.Store({
 
 if (global.location.search.length > 1) {
   doDecompress(global.location.search.substr(1)).then(data => {
-    global.history.replaceState({}, '', global.location.pathname);
     store.commit('loadFullData', {
       readonly: true,
       ...data
