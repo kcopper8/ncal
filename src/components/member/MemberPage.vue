@@ -5,7 +5,7 @@
     ></MemberList>
     <v-layout row>
       <v-dialog v-model="isEditing" persistent max-width="500px">
-        <v-btn slot="activator" color="primary" dark>Add</v-btn>
+        <v-btn v-if="!readonly" slot="activator" color="primary" dark>Add</v-btn>
         <MemberEdit 
           v-if="isEditing"
           :memberEditing="memberEditing"
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import MemberList from './MemberList';
 import MemberEdit from './MemberEdit';
 
@@ -32,6 +33,7 @@ export default {
     MemberList,
     MemberEdit
   },
+  computed: mapState(['readonly']),
   methods: {
     completeEditing(member) {
       if (this.memberEditing) {

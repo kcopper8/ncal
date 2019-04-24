@@ -27,6 +27,7 @@ function getNextIdOfGoods(goodsList) {
 const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    readonly: true,
     members: {},
     goods: []
   },
@@ -60,10 +61,16 @@ const store = new Vuex.Store({
       return chargeMembers;
     },
     fullData: state => {
-      return JSON.parse(JSON.stringify(state));
+      return JSON.parse(JSON.stringify({
+        members: state.members,
+        goods: state.goods
+      }));
     }
   },
   mutations: {
+    changeReadonly(state, payload) {
+      state.readonly = !!payload;
+    },
     addMember(state, member) {
       const nextId = getNextIdOfMember(state.members);
 
@@ -115,6 +122,7 @@ const store = new Vuex.Store({
     loadFullData(state, payload) {
       state.members = payload.members;
       state.goods = payload.goods;
+      state.readonly = payload.readonly;
     }
   }
 });
@@ -122,8 +130,15 @@ const store = new Vuex.Store({
 if (global.location.search.length > 1) {
   doDecompress(global.location.search.substr(1)).then(data => {
     global.history.replaceState({}, '', global.location.pathname);
-    store.commit('loadFullData', data);
+    store.commit('loadFullData', {
+      readonly: true,
+      ...data
+    });
   });
+}
+
+window.changeReadonly = function(payload) {
+  store.commit('changeReadonly', payload);
 }
 
 export default store;

@@ -6,7 +6,7 @@
       <v-toolbar-side-icon></v-toolbar-side-icon>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn @click="share">공유하기</v-btn>
+      <v-btn v-if="!readonly" @click="share">공유하기</v-btn>
     </v-toolbar>
     <v-content>
       <MainPage/>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import MainPage from './components/MainPage';
 import {doCompress as compress} from './service/compress';
 
@@ -25,6 +26,7 @@ export default {
       title: 'NCal'
     }
   },
+  computed: mapState(['readonly']),
   methods: {
     share() {
       compress(this.$store.getters.fullData).then(compressedText => {

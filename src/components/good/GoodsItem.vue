@@ -2,14 +2,16 @@
   <v-card flat>
     <v-card-title class="pa-0">
       <div class="headline">
+        <template v-if="readonly">{{goods.name}}</template>
         <EditableValue
+          v-if="!readonly"
           :value="goods.name"
           @update:value="updateName($event)"
         />
       </div>
-      <span class="grey--text">￦{{goods.price}}</span>
+      <span class="grey--text">{{goodsPrice}}</span>
     </v-card-title>
-    <v-card-actions class="pa-0">
+    <v-card-actions class="pa-0" v-if="!readonly">
       <v-btn
         icon
         @click="deleteGoods(goods.id)"><v-icon>delete</v-icon>
@@ -48,7 +50,11 @@
       </v-container>
     </v-card-text>
     <v-card-text class="pa-0">
+      <ReadonlyGoodsCharge v-if="readonly"
+        :charges="goods.charges"
+      />
       <GoodsCharge 
+        v-if="!readonly"
         :memberList="memberList"
         :charges="goods.charges"
         @changeCharges="changeCharges(goods.id, $event)"
@@ -59,9 +65,11 @@
 
 <script>
 
-import { mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import GoodsCharge from './GoodsCharge'
+import ReadonlyGoodsCharge from './ReadonlyGoodsCharge'
 import EditableValue from '../piece/EditableValue';
+import formatCurrency from '@/utils/formatCurrency';
 
 export default {
   props: ['goods'],
@@ -71,6 +79,10 @@ export default {
     }
   },
   computed: {
+    goodsPrice: function() {
+      return formatCurrency(this.goods.price);
+    },
+    ...mapState(['readonly']),
     ...mapGetters(['memberList'])
   },
   methods: {
@@ -110,6 +122,7 @@ export default {
   },
   components: {
     GoodsCharge,
+    ReadonlyGoodsCharge,
     EditableValue
   }
 }

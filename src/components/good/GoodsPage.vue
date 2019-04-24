@@ -13,7 +13,7 @@
     </v-layout>
     <v-layout row>
       <v-dialog v-model="isEditing" persistent max-width="500px">
-        <v-btn slot="activator" color="primary" dark>Add</v-btn>
+        <v-btn v-if="!readonly" slot="activator" color="primary" dark>Add</v-btn>
           <GoodsEdit v-if="isEditing"
             :editingGoods="editingGoods"
             :memberList="memberList"
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 import GoodsList from './GoodsList';
 import GoodsEdit from './GoodsEdit';
@@ -41,6 +41,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['readonly']),
     ...mapGetters(['memberList', 'goodsList'])
   },
   methods: {
